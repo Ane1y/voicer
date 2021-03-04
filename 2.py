@@ -41,7 +41,7 @@ class RNN(nn.Module):
 
 
 model = RNN()
-model.load_state_dict(torch.load("C:/Users/Somn117/PycharmProjects/voicer/model.pt"))
+model.load_state_dict(torch.load("./model.pt"))
 
 #onex,sr=librosa.load("C:/Users/Somn117/PycharmProjects/voicer/test/me/1.au")
 
@@ -52,7 +52,7 @@ model.load_state_dict(torch.load("C:/Users/Somn117/PycharmProjects/voicer/model.
 
 #print(onex.shape[0]/sr)
 
-me = loadSound("C:/Users/Somn117/PycharmProjects/voicer/test/me/")
+me = loadSound("./test/me/")
 #sasha = loadSound("C:/Users/Somn117/PycharmProjects/voicer/test/sasha/")
 #test = loadSound("C:/Users/Somn117/PycharmProjects/voicer/voice_123/two/")
 X = me

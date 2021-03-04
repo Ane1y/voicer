@@ -80,7 +80,7 @@ for t in range(10000):
             print(type + ' accuracy: ' + str(total_correct/outputs.shape[0] * 100) + '%')
         accuracy_calc(X_train_torch, y_train_torch, "Training")
         accuracy_calc(X_test_torch, y_test_torch, "Testing")
-        torch.save(model.state_dict(), "C:/Users/Somn117/PycharmProjects/voicer/model.pt")
+        torch.save(model.state_dict(), "./model.pt")
 
 
 
