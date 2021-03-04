@@ -7,6 +7,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+def loadSound(path):
+    soundList = listdir(path)
+    loadedSound = []
+    for sound in soundList:
+        Y, sr = librosa.load(path + sound)
+        loadedSound.append(librosa.feature.mfcc(Y, sr=sr))
+    return np.array(loadedSound)
+
+
 class RNN(nn.Module):
     def __init__(self):
         super(RNN, self).__init__()
@@ -34,12 +43,33 @@ class RNN(nn.Module):
 model = RNN()
 model.load_state_dict(torch.load("C:/Users/Somn117/PycharmProjects/voicer/model.pt"))
 
+#onex,sr=librosa.load("C:/Users/Somn117/PycharmProjects/voicer/test/me/1.au")
 
-X, sr = librosa.load("C:/Users/Somn117/PycharmProjects/voicer/test/1.au")
+#print(onex.shape[0]/sr)
 
-X_out=np.array(X)
-x_o=torch.from_numpy(X_out).float()
 
-output = model(x_o)
+#onex,sr=librosa.load("C:/Users/Somn117/PycharmProjects/voicer/test/sasha/1.au")
+
+#print(onex.shape[0]/sr)
+
+me = loadSound("C:/Users/Somn117/PycharmProjects/voicer/test/me/")
+#sasha = loadSound("C:/Users/Somn117/PycharmProjects/voicer/test/sasha/")
+#test = loadSound("C:/Users/Somn117/PycharmProjects/voicer/voice_123/two/")
+X = me
+X_torch = torch.from_numpy(X).float()
+print(X_torch.size())
+matrix=np.zeros(3)
+
+output = model(X_torch).detach().numpy()
+for number in range(output.shape[0]):
+    test = np.argmax(output[number])
+    if test==0:
+        matrix[0]+=1
+    elif test==1:
+        matrix[1]+=1
+    elif test==2:
+        matrix[2]+=1
+
+print(np.argmax(matrix))
 
 print(output)
