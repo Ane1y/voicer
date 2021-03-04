@@ -61,7 +61,7 @@ model = RNN()
 loss_fn = torch.nn.CrossEntropyLoss()
 learning_rate = 0.0001
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-for t in range(10000):
+for t in range(1000):
     y_pred = model(X_train_torch)
     loss = loss_fn(y_pred, y_train_torch)
     print(t, loss.item())
@@ -81,12 +81,13 @@ for t in range(10000):
         accuracy_calc(X_train_torch, y_train_torch, "Training")
         accuracy_calc(X_test_torch, y_test_torch, "Testing")
 
-sample_file = 'C:/Users/Somn117/PycharmProjects/voicer/test/yes.wav'
 
-sample_ds = preprocess_dataset([str(sample_file)])
+torch.save(model.state_dict(), "C:/Users/Somn117/PycharmProjects/voicer/model.pt")
 
-for spectrogram, label in sample_ds.batch(1):
-  prediction = model(spectrogram)
-  plt.bar(commands, tf.nn.softmax(prediction[0]))
-  plt.title(f'Predictions for "{commands[label[0]]}"')
-  plt.show()
+loadedSound=[]
+X, sr = librosa.load("C:/Users/Somn117/PycharmProjects/voicer/test/1.au")
+loadedSound.append(librosa.feature.mfcc(X, sr=sr))
+X_out=np.array(loadedSound)
+output = model(X_out).detach().numpy()
+output_loss = loss_fn(y_pred, y_train_torch)
+print(output)
