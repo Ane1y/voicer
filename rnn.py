@@ -7,10 +7,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 from functions import loadSound, RNN
 
-one = loadSound('./voice_123/one/')
-two = loadSound('./voice_123/two/')
-three = loadSound('./voice_123/three/')
-X = np.concatenate((one, two, three), axis=0)
+
+#one = loadSound('./voice_123/one/')
+#two=loadSound('./voice_123/two/')
+#three=loadSound('./voice_123/three/')
+#Xo=np.concatenate((one,two,three), axis=0)
+me = loadSound('./test/me_text/')
+shurik = loadSound('./test/shurik_text/')
+anely = loadSound('./test/anely_text/')
+X = np.concatenate((me,shurik,anely), axis=0)
 y = np.concatenate((np.repeat(0, 10), np.repeat(1, 10), np.repeat(2, 10)), axis=0)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42, shuffle=True)
 X_train = X_train.swapaxes(1,0)
